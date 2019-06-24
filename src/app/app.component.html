@@ -1,0 +1,96 @@
+<div class="container">
+
+  <aw-wizard>
+
+    <!-- WIZARD step 1 -->
+    <aw-wizard-step stepTitle="Title of step 1">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <form>
+            <div class="form-group">
+              <label>Please selecet a meal :</label>
+              <select class="browser-default custom-select" (change)="onChangeMeal($event.target.value)">
+                  <option value=""> Please Select one</option>
+                <option value="breakfast"> Breakfast</option>
+                <option value="lunch"> Lunch</option>
+                <option value="dinner"> Dinner</option>
+              </select>
+            </div>
+            <div class="form-group" class="browser-default custom-select">
+              <label for="pwd">Please enter number of people : </label>
+              <select>
+                <option value=""> Please Select one</option>
+                <option *ngFor="let people of poeples" [value]="poeple">{{people}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <button type="button" awPreviousStep>Step 1</button>
+      <button type="button" awNextStep>Go to next step</button>
+    </aw-wizard-step>
+
+
+    <!-- WIZARD step 2 -->
+    <aw-wizard-step stepTitle="Title of step 2" awOptionalStep>
+      <div class="cotainer">
+        <div class="row justify-content-center">
+          <div class="col-8">
+            <form>
+              <div class="form-group">
+                <label>Please selecet a Restaurant :</label>
+                <select class="browser-default custom-select" (change)="onChangeRestaurant($event.target.value)">
+                    <option value=""> Please Select one</option>
+                  <option *ngFor="let restaurant of restaurant" [value]="restaurant.restaurant"> {{restaurant.restaurant}}
+                  </option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <button type="button" awPreviousStep>Step 2</button>
+      <button type="button" awNextStep>Go to next step</button>
+    </aw-wizard-step>
+
+
+    <!-- WIZARD step 3 -->
+    <aw-wizard-step stepTitle="Title of step 3">
+      <div class="row justify-content-center">
+        <div class="col-8">
+          <form>
+            <div class="form-group">
+              <label>Please selecet a Dish :</label>
+              <select class="browser-default custom-select">
+                <option *ngFor="let resturant of data" [value]="resturant.name"> {{resturant.name}}
+                </option>
+              </select>
+            </div>
+            <div>
+              <label>Enter number of servings :</label>
+              <select class="browser-default custom-select">
+                <option *ngFor="let people of poeples" [value]="poeple">{{people}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <button type="button" awPreviousStep>Step 3 </button>
+      <button type="button" awNextStep>Go to next step</button>
+    </aw-wizard-step>
+
+
+    <!-- WIZARD step 4 -->
+    <aw-wizard-step stepTitle="Title of step 4">
+      <div class="row justify-content-center">
+        <div class="col-8">
+
+        </div>
+      </div>
+      <button type="button" awPreviousStep>Review</button>
+      <button type="button" (click)="finishFunction()">Finish</button>
+    </aw-wizard-step>
+
+
+  </aw-wizard>
+</div>
