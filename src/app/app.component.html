@@ -10,7 +10,7 @@
             <div class="form-group">
               <label>Please selecet a meal :</label>
               <select class="browser-default custom-select" (change)="onChangeMeal($event.target.value)">
-                  <option value=""> Please Select one</option>
+                <option value=""> Please Select one</option>
                 <option value="breakfast"> Breakfast</option>
                 <option value="lunch"> Lunch</option>
                 <option value="dinner"> Dinner</option>
@@ -26,7 +26,6 @@
           </form>
         </div>
       </div>
-      <button type="button" awPreviousStep>Step 1</button>
       <button type="button" awNextStep>Go to next step</button>
     </aw-wizard-step>
 
@@ -40,8 +39,9 @@
               <div class="form-group">
                 <label>Please selecet a Restaurant :</label>
                 <select class="browser-default custom-select" (change)="onChangeRestaurant($event.target.value)">
-                    <option value=""> Please Select one</option>
-                  <option *ngFor="let restaurant of restaurant" [value]="restaurant.restaurant"> {{restaurant.restaurant}}
+                  <option value=""> Please Select one</option>
+                  <option *ngFor="let restaurant of restaurants" [value]="restaurant.restaurant">
+                    {{restaurant.restaurant}}
                   </option>
                 </select>
               </div>
@@ -62,7 +62,7 @@
             <div class="form-group">
               <label>Please selecet a Dish :</label>
               <select class="browser-default custom-select">
-                <option *ngFor="let resturant of data" [value]="resturant.name"> {{resturant.name}}
+                <option *ngFor="let dish of dish" [value]="dish.name"> {{dish.name}}
                 </option>
               </select>
             </div>

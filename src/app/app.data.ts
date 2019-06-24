@@ -75,7 +75,7 @@ export const dishes =  [
         'id': 13,
         'name': 'Vegan Bento',
         'restaurant': 'Vege Deli',
-        'availableMeals': ['lunch']
+        'availableMeals': ['lunch'] 
       },
       {
         'id': 14,

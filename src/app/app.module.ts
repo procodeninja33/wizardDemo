@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
-
 import { ArchwizardModule } from 'angular-archwizard';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +11,8 @@ import { ArchwizardModule } from 'angular-archwizard';
   ],
   imports: [
     BrowserModule,
-    ArchwizardModule
+    ArchwizardModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
