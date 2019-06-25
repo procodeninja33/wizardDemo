@@ -1,0 +1,17 @@
+.next-btn {
+    float: right;
+    margin-right: 100px;
+}
+
+.back-btn {
+    margin-left: 100px;
+}
+
+.add-dish {
+    cursor: pointer;
+}
+
+.remove-btn {
+    float: right;
+    margin-top:  5px;
+}

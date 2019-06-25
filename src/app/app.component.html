@@ -1,94 +1,132 @@
 <div class="container">
-
   <aw-wizard>
 
     <!-- WIZARD step 1 -->
-    <aw-wizard-step stepTitle="Title of step 1">
+    <aw-wizard-step stepTitle="step 1">
+      <br><br>
       <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <form>
+        <div class="col-lg-9">
+
+          <form [formGroup]="step1">
             <div class="form-group">
               <label>Please selecet a meal :</label>
-              <select class="browser-default custom-select" (change)="onChangeMeal($event.target.value)">
-                <option value=""> Please Select one</option>
+              <select formControlName="meal" class="form-control" (change)="onChangeMeal($event.target.value)">
+                <option value=""> Please select one</option>
                 <option value="breakfast"> Breakfast</option>
                 <option value="lunch"> Lunch</option>
                 <option value="dinner"> Dinner</option>
               </select>
+              <div *ngIf="step1.get('meal').errors">
+                <p *ngIf="step1.get('meal').errors?.required" class="lbl-err">This
+                  field is required.</p>
+              </div>
             </div>
-            <div class="form-group" class="browser-default custom-select">
+            <div class="form-group">
               <label for="pwd">Please enter number of people : </label>
-              <select>
-                <option value=""> Please Select one</option>
+              <select formControlName="people" class="form-control">
+                <option value=""> Please select one</option>
                 <option *ngFor="let people of poeples" [value]="poeple">{{people}}</option>
               </select>
+              <div *ngIf="step1.get('people').errors">
+                <p *ngIf="step1.get('people').errors?.required" class="lbl-err">This
+                  field is required.</p>
+              </div>
             </div>
           </form>
+
         </div>
       </div>
-      <button type="button" awNextStep>Go to next step</button>
+      <button type="button" class="next-btn" awNextStep>Go to next step</button>
     </aw-wizard-step>
 
 
     <!-- WIZARD step 2 -->
-    <aw-wizard-step stepTitle="Title of step 2" awOptionalStep>
+    <aw-wizard-step stepTitle="step 2" [canEnter]="step1Valdiation()">
+      <br><br>
       <div class="cotainer">
         <div class="row justify-content-center">
-          <div class="col-8">
-            <form>
+          <div class="col-lg-9">
+
+            <form [formGroup]="step2">
               <div class="form-group">
                 <label>Please selecet a Restaurant :</label>
-                <select class="browser-default custom-select" (change)="onChangeRestaurant($event.target.value)">
-                  <option value=""> Please Select one</option>
+                <select formControlName="restaurant" class="form-control"
+                  (change)="onChangeRestaurant($event.target.value)">
+                  <option value=""> Please select one</option>
                   <option *ngFor="let restaurant of restaurants" [value]="restaurant.restaurant">
                     {{restaurant.restaurant}}
                   </option>
                 </select>
+                <div *ngIf="step2.get('restaurant').errors">
+                  <p *ngIf="step2.get('restaurant').errors?.required" class="lbl-err">This
+                    field is required.</p>
+                </div>
               </div>
             </form>
+
           </div>
         </div>
       </div>
-      <button type="button" awPreviousStep>Step 2</button>
-      <button type="button" awNextStep>Go to next step</button>
+      <button type="button" class="back-btn" awPreviousStep>Step 2</button>
+      <button type="button" class="next-btn" awNextStep>Go to next step</button>
     </aw-wizard-step>
 
 
     <!-- WIZARD step 3 -->
-    <aw-wizard-step stepTitle="Title of step 3">
+    <aw-wizard-step stepTitle="step 3" [canEnter]="step2Valdiation()">
+      <br><br>
       <div class="row justify-content-center">
-        <div class="col-8">
-          <form>
+        <div class="col-lg-9">
+
+          <form [formGroup]="step3">
             <div class="form-group">
               <label>Please selecet a Dish :</label>
-              <select class="browser-default custom-select">
-                <option *ngFor="let dish of dish" [value]="dish.name"> {{dish.name}}
-                </option>
-              </select>
+              <div formArrayName="dishs" *ngFor="let dish of dishs.controls; let i = index">
+                <div [formGroupName]="i">
+                  <select formControlName="dish" class="form-control">
+                    <option value=""> Please select one</option>
+                    <option *ngFor="let dish of dishList" [value]="dish.name"> {{dish.name}}
+                    </option>
+                  </select>
+                  <button class="remove-btn" *ngIf="dishs.controls.length > 1" (click)="removeDish(i)">remove</button>
+                  <div *ngIf="dish.controls['dish'].errors">
+                    <p *ngIf=" dish.controls['dish'].errors?.required" class="lbl-err">This
+                      field is required.</p>
+                  </div>
+                </div>
+              </div>
+              <h1 (click)="addNext()" class="add-dish"> + </h1>
             </div>
             <div>
               <label>Enter number of servings :</label>
-              <select class="browser-default custom-select">
+              <select formControlName="servingCounte" class="form-control">
+                <option value=""> Please select one</option>
                 <option *ngFor="let people of poeples" [value]="poeple">{{people}}</option>
               </select>
+              <div *ngIf="step3.get('servingCounte').errors">
+                <p *ngIf="step3.get('servingCounte').errors?.required" class="lbl-err">This
+                  field is required.</p>
+              </div>
             </div>
           </form>
+
         </div>
       </div>
-      <button type="button" awPreviousStep>Step 3 </button>
-      <button type="button" awNextStep>Go to next step</button>
+      <button type="button" class="back-btn" awPreviousStep>Step 3 </button>
+      <button type="button" class="next-btn" awNextStep>Go to next step</button>
     </aw-wizard-step>
 
 
     <!-- WIZARD step 4 -->
-    <aw-wizard-step stepTitle="Title of step 4">
+    <aw-wizard-step stepTitle="step 4" [canEnter]="step3Valdiation()">
+      <br><br>
       <div class="row justify-content-center">
-        <div class="col-8">
-
+        <div class="col-lg-9">
+          
         </div>
       </div>
-      <button type="button" awPreviousStep>Review</button>
-      <button type="button" (click)="finishFunction()">Finish</button>
+      <button type="button" class="back-btn" awPreviousStep>Back</button>
+      <button type="button" class="next-btn" (click)="finishFunction()">Finish</button>
     </aw-wizard-step>
 
 

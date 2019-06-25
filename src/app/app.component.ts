@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { dishes } from './app.data';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   data: Array<any> = dishes;
   restaurants: Array<any> = [];
-  dish: Array<any> = [];
+  dishList: Array<any> = [];
   meal: any;
   step1: FormGroup;
   step2: FormGroup;
@@ -23,12 +23,13 @@ export class AppComponent implements OnInit {
   constructor(public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    // this.buildForm1();
-    // this.buildForm2();
-    // this.buildForm3();
+    this.buildForm1();
+    this.buildForm2();
+    this.buildForm3();
     this.removeDuplicateRes(this.data);
   }
 
+  /** Build step 1 Form */
   buildForm1() {
     this.step1 = this.formBuilder.group({
       meal: ['', [Validators.required]],
@@ -36,16 +37,46 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /** Build step 2 form */
   buildForm2() {
     this.step2 = this.formBuilder.group({
       restaurant: ['', [Validators.required]]
     });
   }
 
+  /** Build Step 3 form */
   buildForm3() {
-    // this.step3 = this.formBuilder.group({
-    //   restaurant: ['', [Validators.required]]
-    // });
+    this.step3 = this.formBuilder.group({
+      dishs: this.formBuilder.array([this.createItem()]),
+      servingCounte: ['', [Validators.required]]
+    });
+  }
+
+  /** Create form array for step 3 (dish) field */
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      dish: ['', [Validators.required]]
+    });
+  }
+
+  /** dynamically add new array field field for dish */
+  addNext() {
+    this.dishs.push(this.createItem());
+  }
+
+  /** remove dynamially added dish */
+  removeDish(i) {
+
+    if (this.dishs.length > 1) {
+        this.dishs.removeAt(i);
+    } else {
+        // this.toastr.error('You can not remove all address.');
+    }
+}
+
+  /** dishs array for get */
+  get dishs() {
+    return this.step3.get('dishs') as FormArray;
   }
 
   /** remove Duplicate Resturants */
@@ -55,7 +86,6 @@ export class AppComponent implements OnInit {
     this.restaurants = [];
     for (let i = 0; i < data.length; i++) {
       obj[data[i]['restaurant']] = data[i];
-
     }
 
     for (var key in obj) {
@@ -76,9 +106,45 @@ export class AppComponent implements OnInit {
 
   /** Restaurant dropdown selected option change */
   onChangeRestaurant(event) {
-    this.dish = this.data.filter(element => {
+    this.dishList = this.data.filter(element => {
       return (element.restaurant === event && element.availableMeals.indexOf(this.meal) > -1);
     });
+  }
+
+
+  /** Step one form validation */
+  step1Valdiation() {
+
+    if (this.step1.valid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /** Step two form validation */
+  step2Valdiation() {
+
+    if (this.step2.valid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /** step 3 form valdiation */
+  step3Valdiation() {
+
+    if (this.step3.valid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  finishFunction() {
+
   }
 
 
