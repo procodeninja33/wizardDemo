@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { ReactiveFormsModule } from '@angular/forms/';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -12,7 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms/';
   imports: [
     BrowserModule,
     ArchwizardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

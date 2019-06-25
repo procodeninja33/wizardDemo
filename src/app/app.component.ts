@@ -18,6 +18,10 @@ export class AppComponent implements OnInit {
   step1: FormGroup;
   step2: FormGroup;
   step3: FormGroup;
+  submit1: Boolean = false;
+  submit2: Boolean = false;
+  submit3: Boolean = false;
+  DishError: Boolean = false;
 
 
   constructor(public formBuilder: FormBuilder) { }
@@ -48,14 +52,15 @@ export class AppComponent implements OnInit {
   buildForm3() {
     this.step3 = this.formBuilder.group({
       dishs: this.formBuilder.array([this.createItem()]),
-      servingCounte: ['', [Validators.required]]
     });
   }
 
   /** Create form array for step 3 (dish) field */
   createItem(): FormGroup {
     return this.formBuilder.group({
-      dish: ['', [Validators.required]]
+      dish: ['', [Validators.required]],
+      servingCounte: ['', [Validators.required]]
+
     });
   }
 
@@ -68,11 +73,11 @@ export class AppComponent implements OnInit {
   removeDish(i) {
 
     if (this.dishs.length > 1) {
-        this.dishs.removeAt(i);
+      this.dishs.removeAt(i);
     } else {
-        // this.toastr.error('You can not remove all address.');
+      // this.toastr.error('You can not remove all address.');
     }
-}
+  }
 
   /** dishs array for get */
   get dishs() {
@@ -112,9 +117,9 @@ export class AppComponent implements OnInit {
   }
 
 
+
   /** Step one form validation */
   step1Valdiation() {
-
     if (this.step1.valid) {
       return true;
     } else {
@@ -124,7 +129,6 @@ export class AppComponent implements OnInit {
 
   /** Step two form validation */
   step2Valdiation() {
-
     if (this.step2.valid) {
       return true;
     } else {
@@ -134,9 +138,19 @@ export class AppComponent implements OnInit {
 
   /** step 3 form valdiation */
   step3Valdiation() {
-
     if (this.step3.valid) {
-      return true;
+      let total = 0;
+      this.step3.value.dishs.map(v => {
+        total += parseInt(v.servingCounte, 10);
+      });
+
+      if (total > this.step1.value.people) {
+        // this.DishError = false;
+        return true;
+      } else {
+        // this.DishError = true;
+        return false;
+      }
     } else {
       return false;
     }

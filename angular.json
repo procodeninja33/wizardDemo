@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "wizardDeni": {
+    "WizardDemo": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/wizardDeni",
+            "outputPath": "dist/WizardDemo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -50,18 +51,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "wizardDeni:build"
+            "browserTarget": "WizardDemo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "wizardDeni:build:production"
+              "browserTarget": "WizardDemo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "wizardDeni:build"
+            "browserTarget": "WizardDemo:build"
           }
         },
         "test": {
@@ -72,7 +73,8 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "assets": [
@@ -95,7 +97,7 @@
         }
       }
     },
-    "wizardDeni-e2e": {
+    "WizardDemo-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +105,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "wizardDeni:serve"
+            "devServerTarget": "WizardDemo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "wizardDeni:serve:production"
+              "devServerTarget": "WizardDemo:serve:production"
             }
           }
         },
@@ -123,5 +125,5 @@
       }
     }
   },
-  "defaultProject": "wizardDeni"
+  "defaultProject": "WizardDemo"
 }

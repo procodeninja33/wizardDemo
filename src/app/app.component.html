@@ -1,11 +1,12 @@
+<br>
 <div class="container">
-  <aw-wizard>
+  <aw-wizard >
 
     <!-- WIZARD step 1 -->
     <aw-wizard-step stepTitle="step 1">
       <br><br>
       <div class="row justify-content-center">
-        <div class="col-lg-9">
+        <div class="col-lg-10">
 
           <form [formGroup]="step1">
             <div class="form-group">
@@ -16,7 +17,7 @@
                 <option value="lunch"> Lunch</option>
                 <option value="dinner"> Dinner</option>
               </select>
-              <div *ngIf="step1.get('meal').errors">
+              <div class="err-color" *ngIf="step1.get('meal').errors && submit1">
                 <p *ngIf="step1.get('meal').errors?.required" class="lbl-err">This
                   field is required.</p>
               </div>
@@ -25,9 +26,9 @@
               <label for="pwd">Please enter number of people : </label>
               <select formControlName="people" class="form-control">
                 <option value=""> Please select one</option>
-                <option *ngFor="let people of poeples" [value]="poeple">{{people}}</option>
+                <option *ngFor="let people of poeples" [value]="people">{{people}}</option>
               </select>
-              <div *ngIf="step1.get('people').errors">
+              <div class="err-color" *ngIf="step1.get('people').errors && submit1">
                 <p *ngIf="step1.get('people').errors?.required" class="lbl-err">This
                   field is required.</p>
               </div>
@@ -36,7 +37,7 @@
 
         </div>
       </div>
-      <button type="button" class="next-btn" awNextStep>Go to next step</button>
+      <button type="button" (click)="submit1 = true" class="next-btn btn btn-success" awNextStep>Go to next step</button>
     </aw-wizard-step>
 
 
@@ -45,7 +46,7 @@
       <br><br>
       <div class="cotainer">
         <div class="row justify-content-center">
-          <div class="col-lg-9">
+          <div class="col-lg-10">
 
             <form [formGroup]="step2">
               <div class="form-group">
@@ -57,7 +58,7 @@
                     {{restaurant.restaurant}}
                   </option>
                 </select>
-                <div *ngIf="step2.get('restaurant').errors">
+                <div class="err-color" *ngIf="step2.get('restaurant').errors && submit2">
                   <p *ngIf="step2.get('restaurant').errors?.required" class="lbl-err">This
                     field is required.</p>
                 </div>
@@ -67,68 +68,92 @@
           </div>
         </div>
       </div>
-      <button type="button" class="back-btn" awPreviousStep>Step 2</button>
-      <button type="button" class="next-btn" awNextStep>Go to next step</button>
+      <button type="button" class="back-btn btn" awPreviousStep>Previous</button>
+      <button type="button" (click)="submit2 = true" class="next-btn btn btn-success" awNextStep>Go to next step</button>
     </aw-wizard-step>
 
 
     <!-- WIZARD step 3 -->
     <aw-wizard-step stepTitle="step 3" [canEnter]="step2Valdiation()">
       <br><br>
-      <div class="row justify-content-center">
-        <div class="col-lg-9">
 
-          <form [formGroup]="step3">
-            <div class="form-group">
-              <label>Please selecet a Dish :</label>
-              <div formArrayName="dishs" *ngFor="let dish of dishs.controls; let i = index">
-                <div [formGroupName]="i">
+      <form [formGroup]="step3">
+        <div formArrayName="dishs" *ngFor="let dish of dishs.controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="row justify-content-center">
+              <div class="col-lg-5">
+
+                <div class="form-group">
+                  <label *ngIf="1 > i">Please selecet a Dish :</label>
                   <select formControlName="dish" class="form-control">
                     <option value=""> Please select one</option>
-                    <option *ngFor="let dish of dishList" [value]="dish.name"> {{dish.name}}
+                    <option *ngFor="let dishes of dishList" [value]="dishes.name"> {{dishes.name}}
                     </option>
                   </select>
-                  <button class="remove-btn" *ngIf="dishs.controls.length > 1" (click)="removeDish(i)">remove</button>
-                  <div *ngIf="dish.controls['dish'].errors">
+                  <div class="err-color" *ngIf="dish.controls['dish'].errors && submit3">
                     <p *ngIf=" dish.controls['dish'].errors?.required" class="lbl-err">This
                       field is required.</p>
                   </div>
                 </div>
               </div>
-              <h1 (click)="addNext()" class="add-dish"> + </h1>
-            </div>
-            <div>
-              <label>Enter number of servings :</label>
-              <select formControlName="servingCounte" class="form-control">
-                <option value=""> Please select one</option>
-                <option *ngFor="let people of poeples" [value]="poeple">{{people}}</option>
-              </select>
-              <div *ngIf="step3.get('servingCounte').errors">
-                <p *ngIf="step3.get('servingCounte').errors?.required" class="lbl-err">This
-                  field is required.</p>
+              <div class="col-lg-5">
+                <div class=form-group>
+                  <label *ngIf="1 > i">Enter number of servings :</label>
+                  <select formControlName="servingCounte" class="form-control">
+                    <option value=""> Please select one</option>
+                    <option *ngFor="let people of poeples" [value]="people">{{people}}</option>
+                  </select>
+                  <div class="err-color" *ngIf="dish.controls['servingCounte'].errors && submit3">
+                    <p *ngIf="dish.controls['servingCounte'].errors?.required" class="lbl-err">This
+                      field is required.</p>
+                  </div>
+                </div>
+                <div *ngIf="dishs.controls.length > 1">
+                  <button class="remove-btn btn btn-danger" (click)="removeDish(i)">remove</button>
+                </div>
               </div>
             </div>
-          </form>
+          </div>
+        </div><br>
+        <img (click)="addNext()" class="add-dish" src="../assets/images/icons/69301.png">
+        <br>
+      </form>
 
-        </div>
-      </div>
-      <button type="button" class="back-btn" awPreviousStep>Step 3 </button>
-      <button type="button" class="next-btn" awNextStep>Go to next step</button>
+      <br>
+      <button type="button" class="back-btn btn" awPreviousStep>Previous</button>
+      <button type="button" (click)="submit3 = true" class="next-btn btn btn-success" awNextStep>Go to next step</button>
     </aw-wizard-step>
 
 
     <!-- WIZARD step 4 -->
-    <aw-wizard-step stepTitle="step 4" [canEnter]="step3Valdiation()">
+    <aw-wizard-step stepTitle="Review" [canEnter]="step3Valdiation()">
       <br><br>
       <div class="row justify-content-center">
-        <div class="col-lg-9">
-          
+        <div class="col-lg-6">
+          <h3 align="center"> Order Review</h3><br>
+          <table class="table table-hover">
+            <tr>
+              <td><b>Meal</b></td>
+              <td>{{step1.value.meal}}</td>
+            </tr>
+            <tr>
+              <td><b>No. of people</b></td>
+              <td>{{step1.value.people}}</td>
+            </tr>
+            <tr>
+              <td><b>Restaurant</b></td>
+              <td>{{step2.value.restaurant}}</td>
+            </tr>
+            <tr>
+              <td><b>Dishesh</b> </td>
+              <td><span  *ngFor="let dish of step3.value.dishs"> {{dish.dish}} - {{dish.servingCounte}} <br> </span></td>
+            </tr>
+          </table>
         </div>
       </div>
-      <button type="button" class="back-btn" awPreviousStep>Back</button>
-      <button type="button" class="next-btn" (click)="finishFunction()">Finish</button>
+      <button type="button" class="back-btn btn" awPreviousStep>Previous</button>
+      <button type="button" class="next-btn btn btn-success" (click)="finishFunction()">Submit</button>
     </aw-wizard-step>
-
 
   </aw-wizard>
 </div>

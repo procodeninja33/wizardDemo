@@ -9,9 +9,16 @@
 
 .add-dish {
     cursor: pointer;
+    margin-left: 10%;
+    height: 40px;
+    width: 40px;
 }
 
 .remove-btn {
     float: right;
-    margin-top:  5px;
+    margin-bottom:  5%;
+}
+
+.err-color {
+    color: red
 }
