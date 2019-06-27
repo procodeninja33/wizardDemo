@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { dishes } from './app.data';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,8 @@ export class AppComponent implements OnInit {
   DishError: Boolean = false;
 
 
-  constructor(public formBuilder: FormBuilder) { }
+  constructor(public formBuilder: FormBuilder,
+    public toastr: ToastrService) { }
 
   ngOnInit() {
     this.buildForm1();
@@ -156,9 +158,23 @@ export class AppComponent implements OnInit {
     }
   }
 
+  checkValidation() {
+    this.submit3 = true;
+    let total = 0;
+    this.step3.value.dishs.map(v => {
+      total += parseInt(v.servingCounte, 10);
+    });
+
+    if (total > this.step1.value.people) {
+      return true;
+    } else {
+      this.toastr.error('serving dish is not less than people')
+    }
+  }
+
 
   finishFunction() {
-
+    this.toastr.success('Order successfully placed.');
   }
 
 
